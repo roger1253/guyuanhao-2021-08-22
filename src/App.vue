@@ -1,14 +1,85 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <page-content></page-content>
+    <div class="fade" />
+    <div class="tip">
+      <img class="scape-img"
+        :src="ScapeImg" />
+      <p>请使用纵向</p>
     </div>
-    <router-view />
   </div>
 </template>
 
+<script>
+import ScapeImg from './assets/scape.png';
+import PageContent from './PageContent';
+
+export default {
+  components: {
+    PageContent
+  },
+  data () {
+    return {
+      ScapeImg,
+    }
+  },
+}
+</script>
+
 <style lang="less">
+* {
+  margin: 0;
+  padding: 0;
+}
+@keyframes imgRotate {
+  from {
+    transform: rotate(-90deg);
+  }
+
+  50% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(-90deg);
+  }
+}
+.fade,
+.tip {
+  display: none;
+}
+@media (orientation: portrait) {
+  .fade {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    display: block;
+  }
+  .tip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    .scape-img {
+      max-width: 100vw;
+      max-height: 100vh;
+      transform: rotate(-90deg);
+      animation-duration: 1s;
+      animation-name: imgRotate;
+      animation-iteration-count: infinite;
+    }
+    p {
+      color: white;
+      font-weight: bold;
+    }
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
